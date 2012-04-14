@@ -66,10 +66,10 @@ namespace Dodo.Modules.Dashboard
         {
             // TODO: get a proper framework to handle this behaviour
             var task = e.ClickedItem as UserTask;
+            if (task == null) return;
 
             var command = task.Command;
-            if (command == null)
-                return;
+            if (command == null) return;
 
             if (task.Command.CanExecute(null))
                 task.Command.Execute(null);

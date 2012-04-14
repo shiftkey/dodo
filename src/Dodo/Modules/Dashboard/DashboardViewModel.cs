@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using BoxKite;
 using BoxKite.Models;
 using BoxKite.Modules;
@@ -27,8 +28,8 @@ namespace Dodo.Modules.Dashboard
             get { return _tasks; }
         }
 
-        private readonly ObservableCollection<Tweet> _tweets = new ObservableCollection<Tweet>();
-        public ObservableCollection<Tweet> Tweets
+        private readonly ObservableCollection<TweetGroup<Tweet>> _tweets = new ObservableCollection<TweetGroup<Tweet>>();
+        public ObservableCollection<TweetGroup<Tweet>> Tweets
         {
             get { return _tweets; }
         }
@@ -117,7 +118,38 @@ namespace Dodo.Modules.Dashboard
         private void AddTweet(object sender, InvokedHandlerArgs e)
         {
             var tweet = e.Context as Tweet;
-            Tweets.Add(tweet);
+            if (tweet == null) return;
+
+            var time = tweet.Timestamp;
+            var existing = Tweets.FirstOrDefault(c => c.RangeStart < time && c.RangeEnd >= time);
+
+            if (existing != null)
+            {
+                existing.Add(tweet);
+                return;
+            }
+
+            var timeSince = DateTimeOffset.UtcNow.Subtract(time);
+
+            if (timeSince.Hours == 0 && timeSince.Minutes < 10)
+            {
+                var group = new TweetGroup<Tweet> { Key = "Just Now", RangeStart = DateTimeOffset.UtcNow.Subtract(TimeSpan.FromMinutes(10)), RangeEnd = DateTimeOffset.UtcNow };
+                group.Add(tweet);
+                Tweets.Add(group);
+                return;
+            }
+
+            if (timeSince.Hours == 0)
+            {
+                var lastHour = new TweetGroup<Tweet> { Key = "Last Hour", RangeStart = DateTimeOffset.UtcNow.Subtract(TimeSpan.FromHours(1)), RangeEnd = DateTimeOffset.UtcNow };
+                lastHour.Add(tweet);
+                Tweets.Add(lastHour);
+                return;
+            }
+
+
+
+
         }
     }
 }

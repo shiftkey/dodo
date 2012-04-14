@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using BoxKite.Extensions;
 using BoxKite.Models;
 using BoxKite.Modules;
 
@@ -11,7 +12,13 @@ namespace BoxKite
 {
     public class AnonymousSession : IAnonymousSession
     {
-        private Func<SearchResponse, IEnumerable<Tweet>> callback = o => o.results.Select(c => new Tweet { Text = c.text, Author = c.from_user, Avatar = c.profile_image_url_https });
+        private Func<SearchResponse, IEnumerable<Tweet>> callback = o => o.results.Select(c => new Tweet
+                                                                                                   {
+                                                                                                       Text = c.text,
+                                                                                                       Author = c.from_user,
+                                                                                                       Avatar = c.profile_image_url_https,
+                                                                                                       Timestamp = c.created_at
+                                                                                                   });
 
         public IObservable<Tweet> SearchFor(string phrase, int resultsPerPage = 50, int pages = 1)
         {

@@ -19,8 +19,8 @@ namespace BoxKite.Modules
             Author = o.sender.name,
             Avatar = o.sender.profile_image_url_https,
             Recipient = o.recipient.name,
-            Time = o.created_at.ParseDateTime()
-        }).OrderByDescending(o => o.Time);
+            Timestamp = o.created_at.ParseDateTime()
+        }).OrderByDescending(o => o.Timestamp);
 
         public static IObservable<DirectMessage> GetDirectMessages(this IUserSession session)
         {

@@ -4,7 +4,7 @@ namespace BoxKite.Extensions
 {
     public static class StringExtensions
     {
-        public static DateTime ParseDateTime(this string date)
+        public static DateTimeOffset ParseDateTime(this string date)
         {
             string dayOfWeek = date.Substring(0, 3).Trim();
             string month = date.Substring(4, 3).Trim();
@@ -14,7 +14,7 @@ namespace BoxKite.Extensions
             string year = date.Substring(25, 5).Trim();
             string dateTime = string.Format("{0}-{1}-{2} {3}", dayInMonth, month, year, time);
 
-            DateTime ret = DateTime.Parse(dateTime);
+            DateTimeOffset ret = DateTimeOffset.Parse(dateTime);
             return ret;
         }
     }

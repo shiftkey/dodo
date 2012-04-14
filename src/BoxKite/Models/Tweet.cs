@@ -26,16 +26,16 @@ namespace BoxKite.Models
             set { SetProperty(ref _author, value); }
         }
 
-        private DateTime _date;
-        public DateTime Time
+        private DateTimeOffset _timestamp;
+        public DateTimeOffset Timestamp
         {
-            get { return _date; }
-            set { SetProperty(ref _date, value); }
+            get { return _timestamp; }
+            set { SetProperty(ref _timestamp, value); }
         }
 
         public string FriendlyTime
         {
-            get { return Time.ToFriendlyText(); }
+            get { return Timestamp.DateTime.ToFriendlyText(); }
         }
     }
 }

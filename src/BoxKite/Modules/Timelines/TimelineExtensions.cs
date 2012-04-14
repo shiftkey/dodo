@@ -18,8 +18,8 @@ namespace BoxKite.Modules
                                                                                                      Text = o.text, 
                                                                                                      Author = o.user.name, 
                                                                                                      Avatar = o.user.profile_image_url_https,
-                                                                                                     Time = o.created_at.ParseDateTime()
-                                                                                                 }).OrderByDescending(o => o.Time);
+                                                                                                     Timestamp = o.created_at.ParseDateTime()
+                                                                                                 }).OrderByDescending(o => o.Timestamp);
 
         public static IObservable<Tweet> GetMentions(this IUserSession session)
         {

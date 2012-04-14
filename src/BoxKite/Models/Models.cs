@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
@@ -12,7 +13,7 @@ namespace BoxKite.Models
 
     public class Result
     {
-        public string created_at { get; set; }
+        public DateTimeOffset created_at { get; set; }
         public string from_user { get; set; }
         public int from_user_id { get; set; }
         public string from_user_id_str { get; set; }

@@ -18,7 +18,7 @@
         <CollectionViewSource
             x:Name="tweetViewSource"
             Source="{Binding Tweets}"
-            IsSourceGrouped="False"
+            IsSourceGrouped="True"
 			d:Source="{Binding Tweets, Source={d:DesignInstance Type=data:TasksDataSource, IsDesignTimeCreatable=True}}" />
 
         <Storyboard x:Name="RotatingSquare" RepeatBehavior="Forever">
@@ -87,7 +87,41 @@
                               AutomationProperties.Name="Search Tweets"
                               ItemsSource="{Binding Source={StaticResource tweetViewSource}}"
                               ItemTemplate="{StaticResource TweetItemTemplate}" 
-                              SelectionMode="None" />
+                              SelectionMode="None" >
+                        <GridView.GroupStyle>
+                            <GroupStyle>
+                                <GroupStyle.HeaderTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text='{Binding Key}' Foreground="White" Margin="5" FontSize="22" FontFamily="Segoe UI Light" />
+                                    </DataTemplate>
+                                </GroupStyle.HeaderTemplate>
+                                <GroupStyle.ContainerStyle>
+                                    <Style TargetType="GroupItem">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="GroupItem">
+                                                    <StackPanel Orientation="Vertical">
+                                                        <ContentPresenter Content="{TemplateBinding Content}" />
+                                                        <ItemsControl x:Name="ItemsControl" ItemsSource="{Binding GroupItems}" />
+                                                    </StackPanel>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </GroupStyle.ContainerStyle>
+                                <GroupStyle.Panel>
+                                    <ItemsPanelTemplate>
+                                        <VariableSizedWrapGrid Orientation="Vertical" MaximumRowsOrColumns="3" />
+                                    </ItemsPanelTemplate>
+                                </GroupStyle.Panel>
+                            </GroupStyle>
+                        </GridView.GroupStyle>
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+                    </GridView>
 					<Rectangle x:Name="rectangle" 
 								Fill="{StaticResource BackgroundSecondarySemitransparent}" 
 								HorizontalAlignment="Left" 
