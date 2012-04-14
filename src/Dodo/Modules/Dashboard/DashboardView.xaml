@@ -72,15 +72,17 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <GridView AutomationProperties.AutomationId="ItemGridView"
-                          AutomationProperties.Name="Items In Group"
-                          ItemClick="CommandClicked"
-                          IsItemClickEnabled="True"
-                          HorizontalAlignment="Stretch"
-                          HorizontalContentAlignment="Stretch"
-                          ItemsSource="{Binding Source={StaticResource itemsViewSource}}"
-                          ItemTemplate="{StaticResource MenuItemTemplate}" 
-                          SelectionMode="None" />
+                <ItemsControl AutomationProperties.AutomationId="ItemGridView"
+                              AutomationProperties.Name="Items In Group"
+                              HorizontalAlignment="Stretch"
+                              ItemsSource="{Binding Source={StaticResource itemsViewSource}}"
+                              ItemTemplate="{StaticResource MenuItemTemplate}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                 </ItemsControl>
 
                 <Grid Grid.Column="1">
                     <SemanticZoom>
@@ -112,7 +114,7 @@
                                         </GroupStyle.ContainerStyle>
                                         <GroupStyle.Panel>
                                             <ItemsPanelTemplate>
-                                                <VariableSizedWrapGrid Orientation="Vertical" MaximumRowsOrColumns="6" VerticalAlignment="Stretch" />
+                                                <VariableSizedWrapGrid Orientation="Vertical" MaximumRowsOrColumns="4" VerticalAlignment="Stretch" />
                                             </ItemsPanelTemplate>
                                         </GroupStyle.Panel>
                                     </GroupStyle>
@@ -152,7 +154,7 @@
                                         </GroupStyle.ContainerStyle>
                                         <GroupStyle.Panel>
                                             <ItemsPanelTemplate>
-                                                <VariableSizedWrapGrid Orientation="Vertical" MaximumRowsOrColumns="6" VerticalAlignment="Stretch" />
+                                                <VariableSizedWrapGrid Orientation="Vertical" MaximumRowsOrColumns="4" VerticalAlignment="Stretch" />
                                             </ItemsPanelTemplate>
                                         </GroupStyle.Panel>
                                     </GroupStyle>

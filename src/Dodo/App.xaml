@@ -26,21 +26,92 @@
             <SolidColorBrush x:Key="SomethingElse">#588F27</SolidColorBrush>
 
             <x:String x:Key="AppName">Dodo</x:String>
+            <Style x:Key="InvisibleButtonStyle" TargetType="Button">
+            	<Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}"/>
+            	<Setter Property="Foreground" Value="{StaticResource ControlForegroundBrush}"/>
+            	<Setter Property="BorderBrush" Value="Transparent"/>
+            	<Setter Property="BorderThickness" Value="0"/>
+            	<Setter Property="Padding" Value="12,4,12,5"/>
+            	<Setter Property="HorizontalAlignment" Value="Left"/>
+            	<Setter Property="VerticalAlignment" Value="Center"/>
+            	<Setter Property="FontFamily" Value="{StaticResource ContentFontFamily}"/>
+            	<Setter Property="FontWeight" Value="{StaticResource SemiBold}"/>
+            	<Setter Property="FontSize" Value="{StaticResource ContentFontSize}"/>
+            	<Setter Property="Template">
+            		<Setter.Value>
+            			<ControlTemplate TargetType="Button">
+            				<Grid>
+            					<VisualStateManager.VisualStateGroups>
+            						<VisualStateGroup x:Name="CommonStates">
+            							<VisualState x:Name="Normal"/>
+            							<VisualState x:Name="PointerOver">
+            								<Storyboard>
+            									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Border">
+            										<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ControlPointerOverFillBrush}"/>
+            									</ObjectAnimationUsingKeyFrames>
+            								</Storyboard>
+            							</VisualState>
+            							<VisualState x:Name="Pressed">
+            								<Storyboard>
+            									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Border">
+            										<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ControlForegroundBrush}"/>
+            									</ObjectAnimationUsingKeyFrames>
+            									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+            										<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ControlPressedTextBrush}"/>
+            									</ObjectAnimationUsingKeyFrames>
+            								</Storyboard>
+            							</VisualState>
+            							<VisualState x:Name="Disabled">
+            								<Storyboard>
+            									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="Border">
+            										<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ControlDisabledFillBrush}"/>
+            									</ObjectAnimationUsingKeyFrames>
+            									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="BorderBrush" Storyboard.TargetName="Border">
+            										<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ControlDisabledBrush}"/>
+            									</ObjectAnimationUsingKeyFrames>
+            									<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+            										<DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ControlDisabledTextBrush}"/>
+            									</ObjectAnimationUsingKeyFrames>
+            								</Storyboard>
+            							</VisualState>
+            						</VisualStateGroup>
+            						<VisualStateGroup x:Name="FocusStates">
+            							<VisualState x:Name="Focused">
+            								<Storyboard>
+            									<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="FocusVisualWhite"/>
+            									<DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="FocusVisualBlack"/>
+            								</Storyboard>
+            							</VisualState>
+            							<VisualState x:Name="Unfocused"/>
+            							<VisualState x:Name="PointerFocused"/>
+            						</VisualStateGroup>
+            					</VisualStateManager.VisualStateGroups>
+            					<Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Margin="3">
+            						<ContentPresenter x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            					</Border>
+            					<Rectangle x:Name="FocusVisualWhite" IsHitTestVisible="False" Opacity="0" StrokeDashOffset="1.5" StrokeEndLineCap="Square" Stroke="{StaticResource FocusVisualWhiteStrokeBrush}" StrokeDashArray="1,1"/>
+            					<Rectangle x:Name="FocusVisualBlack" IsHitTestVisible="False" Opacity="0" StrokeDashOffset="0.5" StrokeEndLineCap="Square" Stroke="{StaticResource FocusVisualBlackStrokeBrush}" StrokeDashArray="1,1"/>
+            				</Grid>
+            			</ControlTemplate>
+            		</Setter.Value>
+            	</Setter>
+            </Style>
             <DataTemplate x:Key="MenuItemTemplate">
-                <Grid Height="60" Margin="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border Background="{StaticResource SomethingElse}" Width="60" Height="60">
-                        <TextBlock Text="{Binding Count}" 
+                <Button Command="{Binding Command}" Style="{StaticResource InvisibleButtonStyle}">
+                    <Grid Height="60" Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Background="{StaticResource SomethingElse}" Width="60" Height="60">
+                            <TextBlock Text="{Binding Count}" 
                                    Visibility="Collapsed" 
                                    FontFamily="Segoe UI Light" 
                                    FontSize="48" 
                                    HorizontalAlignment="Center" 
                                    VerticalAlignment="Center" />
-                    </Border>
-                    <TextBlock Text="{Binding Title}" 
+                        </Border>
+                        <TextBlock Text="{Binding Title}" 
                                Style="{StaticResource TitleTextStyle}" 
                                TextWrapping="NoWrap" 
                                FontSize="24" 
@@ -52,7 +123,8 @@
                                FontFamily="Segoe UI Light" 
                                FontWeight="Normal" 
                                TextTrimming="None"/>
-                </Grid>
+                    </Grid>
+                </Button>
             </DataTemplate>
 
             <DataTemplate x:Key="AvatarTemplate">

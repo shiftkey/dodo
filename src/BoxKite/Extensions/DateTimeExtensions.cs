@@ -21,7 +21,7 @@ namespace BoxKite.Extensions
 
         public static string ToFriendlyText(this DateTime pastTime, DateTime currentTime)
         {
-            var timeSince = currentTime - pastTime.ToLocalTime();
+            var timeSince = currentTime - pastTime;
             if (timeSince > new TimeSpan(24, 0, 0))
             {
                 if (timeSince < new TimeSpan(48, 0, 0))

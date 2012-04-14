@@ -230,6 +230,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.4.5.1\lib\winrt45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="ReactiveUI.Routing_WinRT">
+      <HintPath>..\..\lib\reactive-ui\ReactiveUI.Routing_WinRT.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI.Xaml_WinRT">
+      <HintPath>..\..\lib\reactive-ui\ReactiveUI.Xaml_WinRT.dll</HintPath>
+    </Reference>
+    <Reference Include="ReactiveUI_WinRT">
+      <HintPath>..\..\lib\reactive-ui\ReactiveUI_WinRT.dll</HintPath>
+    </Reference>
     <Reference Include="System.Reactive.Core, Version=2.0.20304.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Rx-Core.2.0.20304-beta\lib\WinRT45\System.Reactive.Core.dll</HintPath>
@@ -247,14 +256,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\lib\caliburn.micro\src\Caliburn.Micro.WinRT.Extensions\Caliburn.Micro.WinRT.Extensions.csproj">
-      <Project>{e5718a59-1466-4b36-ba76-f596f550b19b}</Project>
-      <Name>Caliburn.Micro.WinRT.Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\lib\caliburn.micro\src\Caliburn.Micro.WinRT\Caliburn.Micro.WinRT.csproj">
-      <Project>{fdbdc52d-6a55-4531-9899-a5dcb0e09f15}</Project>
-      <Name>Caliburn.Micro.WinRT</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BoxKite\BoxKite.csproj">
       <Project>{5c1cf862-b5e7-40d3-9bdb-bb2a0ba4623d}</Project>
       <Name>BoxKite</Name>

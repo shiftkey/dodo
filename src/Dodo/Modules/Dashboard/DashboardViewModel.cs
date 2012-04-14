@@ -129,8 +129,7 @@ namespace Dodo.Modules.Dashboard
                 return;
             }
 
-            var timeSince = DateTimeOffset.UtcNow.Subtract(time);
-
+            var timeSince = DateTime.UtcNow - time;
             if (timeSince.Hours == 0 && timeSince.Minutes < 10)
             {
                 var group = new TweetGroup<Tweet> { Key = "Just Now", RangeStart = DateTimeOffset.UtcNow.Subtract(TimeSpan.FromMinutes(10)), RangeEnd = DateTimeOffset.UtcNow };
@@ -144,12 +143,19 @@ namespace Dodo.Modules.Dashboard
                 var lastHour = new TweetGroup<Tweet> { Key = "Last Hour", RangeStart = DateTimeOffset.UtcNow.Subtract(TimeSpan.FromHours(1)), RangeEnd = DateTimeOffset.UtcNow };
                 lastHour.Add(tweet);
                 Tweets.Add(lastHour);
-                return;
             }
 
+            if (timeSince.Hours < 24)
+            {
+                var lastHour = new TweetGroup<Tweet> { Key = "Today", RangeStart = DateTimeOffset.UtcNow.Subtract(TimeSpan.FromHours(24)), RangeEnd = DateTimeOffset.UtcNow };
+                lastHour.Add(tweet);
+                Tweets.Add(lastHour);
+            }
+        }
 
-
-
+        private DateTime ToLocal(DateTime time)
+        {
+            return time.Subtract(TimeSpan.FromHours(10));
         }
     }
 }
